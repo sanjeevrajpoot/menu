@@ -2,6 +2,7 @@
 
 namespace Indianic\MenuManagement;
 
+use Illuminate\Http\Request;
 use Indianic\MenuManagement\Nova\Resources\Menu;
 use Indianic\MenuManagement\Policies\MenuPolicy;
 use Laravel\Nova\Nova;
@@ -34,8 +35,9 @@ class MenuManagementServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        $this->customMenu();
-
+        if (env('CUSTOM_MENU')) {
+            $this->customMenu();
+        }
     }
 
     /**
@@ -79,7 +81,7 @@ class MenuManagementServiceProvider extends ServiceProvider
         \Config::set('nova-permissions.permissions', $existingPermissions);
     }
 
-        /**
+    /**
      * Get the menu item that should be listed in the Nova sidebar.
      *
      * @return array
@@ -118,10 +120,12 @@ class MenuManagementServiceProvider extends ServiceProvider
                                 ->icon($value->icon);
                         } else {
                             $items[] =  MenuSection::make(
-                                $value->name,[
+                                $value->name,
+                                [
                                     MenuItem::externalLink($value->menus[0]->display_name, $value->items[0]->url)
-                                    ->openInNewTab()
-                            ])->icon($value->icon)->collapsable();
+                                        ->openInNewTab()
+                                ]
+                            )->icon($value->icon)->collapsable();
                         }
                     }
                 }
