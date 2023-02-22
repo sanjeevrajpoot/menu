@@ -1,5 +1,5 @@
 {
-    "name": "indianicsanjeev/menu-management",
+    "name": "indianic/menu-management",
     "autoload": {
         "psr-4": {
             "Indianic\\MenuManagement\\": "src/"
