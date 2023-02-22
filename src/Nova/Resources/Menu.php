@@ -2,7 +2,8 @@
 
 namespace Indianic\MenuManagement\Nova\Resources;
 
-use App\Models\Menu as ModelsMenu;
+use Indianic\MenuManagement\Models\Menu as ModelsMenu;
+use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;

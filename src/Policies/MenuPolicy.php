@@ -58,7 +58,7 @@ class MenuPolicy
      *
      * @return Response|bool
      */
-    public function delete(): Response|bool
+    public function delete(Admin $user): Response|bool
     {
         return $user->hasPermissionTo('delete menu-management');
     }
