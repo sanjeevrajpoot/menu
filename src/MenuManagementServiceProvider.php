@@ -35,7 +35,7 @@ class MenuManagementServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        if (env('CUSTOM_MENU')) {
+        if (config('nova-menu.default') === true) {
             $this->customMenu();
         }
     }

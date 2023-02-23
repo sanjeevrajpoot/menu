@@ -60,6 +60,6 @@ class MenuPolicy
      */
     public function delete(Admin $user): Response|bool
     {
-        return $user->hasPermissionTo('delete menu-management');
+        return false;
     }
 }

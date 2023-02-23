@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('parent_id')->nullable();
             $table->string('display_name')->nullable();
-            $table->boolean('is_external_url')->default(false);
+            $table->boolean('is_external_url')->default(true);
             $table->string('url')->nullable();
             $table->string('icon')->nullable();
             $table->integer('sort_order');

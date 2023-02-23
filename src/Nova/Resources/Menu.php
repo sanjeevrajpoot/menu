@@ -58,10 +58,13 @@ class Menu extends Resource
                 ModelsMenu::where('parent_id', null)->get()
                     ->pluck('name', 'id')
             )
+                ->hideWhenUpdating($this->parent_id == null ? true : false)
                 ->placeholder('Select Group')
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->withMeta(['value' => $this->parent_id ?? 'Parent']),
 
             Text::make('Display Name')
+                ->hideWhenUpdating($this->parent_id == null ? true : false)
                 ->readonly()
                 ->dependsOn(
                     ['parent_id'],
@@ -73,6 +76,7 @@ class Menu extends Resource
                 ),
 
             Text::make('Icon')
+                ->hideWhenUpdating($this->parent_id == null ? false : true)
                 ->help('You can check the icons here<a href="https://v1.heroicons.com/" target="_blank"> Heroicons </a>.')
                 ->rules('required')
                 ->dependsOn(
@@ -84,22 +88,11 @@ class Menu extends Resource
                     }
                 ),
 
-            Boolean::make('External Url', 'is_external_url')
-                ->withMeta(['value' => $this->is_external_url ?? true])
-                ->hideFromIndex()
-                ->readonly()
-                ->dependsOn(
-                    ['parent_id'],
-                    function (Boolean $field, NovaRequest $request, FormData $formData) {
-                        if ($formData->parent_id > 0) {
-                            $field->readonly(false);
-                        }
-                    }
-                ),
-
             Text::make('Url')
-                ->help('Internal Url Ex. - "resources/users" and External Url Ex. - "https://nova.laravel.com"')
+                ->help('You can put only external url here. Ex. - "https://nova.laravel.com"')
                 ->hideFromIndex()
+                ->hideWhenUpdating(($this->is_external_url && $this->parent_id != null ? false : true))
+                ->placeholder('https://nova.laravel.com')
                 ->readonly()
                 ->dependsOn(
                     ['parent_id'],
@@ -109,7 +102,7 @@ class Menu extends Resource
                         }
                     }
                 ),
-
+            HasMany::make('menus')->hideFromDetail($this->parent_id > null ? true : false)
         ];
     }
 
