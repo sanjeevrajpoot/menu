@@ -34,6 +34,8 @@ class MenuManagementServiceProvider extends ServiceProvider
         });
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadSeedersFrom(__DIR__ . '/../database/seeders');
+        $this->publishes([__DIR__ . '/../config' => config_path()], 'menu-management-config');
 
         if (config('nova-menu.default') === true) {
             $this->customMenu();
@@ -47,7 +49,10 @@ class MenuManagementServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/nova-menu.php',
+            'nova-menu',
+        );
     }
 
     /**
