@@ -11,3 +11,5 @@ Step 4: sail composer require outl1ne/nova-sortable
 Step 5: sail php artisan migrate
 
 Step 6: sail php artisan db:seed --class=MenuSeeder
+
+Step 7: add you env - CUSTOM_MENU=true (default false)

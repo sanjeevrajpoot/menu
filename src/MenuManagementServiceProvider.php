@@ -34,7 +34,6 @@ class MenuManagementServiceProvider extends ServiceProvider
         });
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadSeedersFrom(__DIR__ . '/../database/seeders');
         $this->publishes([__DIR__ . '/../config' => config_path()], 'menu-management-config');
 
         if (config('nova-menu.default') === true) {
@@ -127,7 +126,7 @@ class MenuManagementServiceProvider extends ServiceProvider
                             $items[] =  MenuSection::make(
                                 $value->name,
                                 [
-                                    MenuItem::externalLink($value->menus[0]->display_name, $value->items[0]->url)
+                                    MenuItem::externalLink($value->menus[0]->display_name, $value->menus[0]->url)
                                         ->openInNewTab()
                                 ]
                             )->icon($value->icon)->collapsable();
